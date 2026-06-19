@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -69,7 +70,7 @@ func TestSetAddress(t *testing.T) {
 
 	ch, err := store.Get(number)
 	require.NoError(t, err)
-	require.Equal(t, newAddress, ch.Address)
+	assert.Equal(t, newAddress, ch.Address)
 }
 
 func TestSetStatus(t *testing.T) {
@@ -91,7 +92,7 @@ func TestSetStatus(t *testing.T) {
 
 	ch, err := store.Get(number)
 	require.NoError(t, err)
-	require.Equal(t, status, ch.Status)
+	assert.Equal(t, status, ch.Status)
 }
 
 func TestGetByClient(t *testing.T) {
@@ -126,11 +127,11 @@ func TestGetByClient(t *testing.T) {
 
 	storedParcels, err := store.GetByClient(client)
 	require.NoError(t, err)
-	require.Equal(t, len(parcels), len(storedParcels))
+	assert.Len(t, storedParcels, len(parcels))
 
 	for _, parcel := range storedParcels {
 		value, ok := parcelMap[parcel.Number]
-		require.True(t, ok)
-		require.Equal(t, value, parcel)
+		assert.True(t, ok)
+		assert.Equal(t, value, parcel)
 	}
 }
